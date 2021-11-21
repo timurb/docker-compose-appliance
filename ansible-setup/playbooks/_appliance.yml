@@ -25,6 +25,8 @@
       - "{% if appliance_swarm | bool %} start-swarm.sh {% endif %}"
       - "{% if appliance_swarm | bool %} stop-swarm.sh {% endif %}"
 
+    appliance_start_command: "{% if appliance_swarm | bool %} start-swarm.sh {% else %} start-local.sh {% endif %}"
+
     appliance_compose_files_filtered: "{{ appliance_compose_files | default([]) | select() | map('trim') | list }}"
     appliance_scripts_filtered: "{{ appliance_scripts | default([]) | select() | map('trim') | list }}"
    
@@ -59,7 +61,7 @@
     with_items: "{{ appliance_scripts_filtered }}"
 
   - name: "Start compose services for {{ appliance_name }}"
-    command: ./start-local.sh	###FIXME: add support for Docker Swarm
+    command: "./{{ appliance_start_command | trim }}"
     args:
       chdir: "{{ appliance_dir }}"
     become: yes

@@ -4,4 +4,4 @@ docker_config: >-
 
 appliance_base_dir: "/"
 
-swarm_mode: true
+swarm_mode: false
