@@ -8,9 +8,10 @@
 - hosts: "role-{{ host_role }}"
   gather_facts: no
   vars:
-    appliance_user: "{{ host_role }}"
-    appliance_dir: "{{ appliance_base_dir | default('/') }}{{ host_role }}"
-    appliance_source_compose_path: "docker-compose/{{ host_role }}"
+    appliance_name: "{{ host_role }}"
+    appliance_user: "{{ appliance_name }}"
+    appliance_dir: "{{ appliance_base_dir | default('/') }}{{ appliance_name }}"
+    appliance_source_compose_path: "docker-compose/{{ appliance_name }}"
     appliance_compose_files:
       - docker-compose.yml
     appliance_compose_files_filtered: "{{ appliance_compose_files | default([]) | select() | map('trim') | list }}"
@@ -28,7 +29,7 @@
       groups: docker
       append: true
 
-  - name: "Deploy docker-compose file for {{ host_role }}"
+  - name: "Deploy docker-compose file for {{ appliance_name }}"
     template:
       src: "{{ appliance_source_compose_path }}/{{ item }}"
       dest: "{{ appliance_dir }}/{{ item }}"
@@ -36,21 +37,19 @@
       mode: 0644
     loop: "{{ appliance_compose_files_filtered }}"
 
-  - name: "Create startup file for local use of {{ host_role }}"
+  - name: "Create management scripts for {{ appliance_name }}"
     template:
-      src: "templates/start-local.sh.j2"
-      dest: "{{ appliance_dir }}/start-local.sh"
+      src: "templates/{{ item }}.j2"
+      dest: "{{ appliance_dir }}/{{ item }}"
       owner: root
       mode: 0755
+    with_items:
+      - start-local.sh
+      - stop-local.sh
+      - start-swarm.sh
+      - stop-swarm.sh
 
-  - name: "Create shutdown file for local use of {{ host_role }}"
-    template:
-      src: "templates/stop-local.sh.j2"
-      dest: "{{ appliance_dir }}/stop-local.sh"
-      owner: root
-      mode: 0755
-
-#  - name: "Start compose services for {{ host_role }}"
+#  - name: "Start compose services for {{ appliance_name }}"
 #    command: docker-compose up -d
 #    args:
 #      chdir: "{{ appliance_dir }}"
