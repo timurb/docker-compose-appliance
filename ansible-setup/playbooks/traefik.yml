@@ -3,4 +3,5 @@
     host_role: traefik   
     appliance_compose_files:
       - docker-compose.yml
+      - "{% if traefik_whoami == 'true' %} docker-compose.whoami.yml {% endif %}"
 #      - docker-compose.swarm.yml

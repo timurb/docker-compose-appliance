@@ -13,6 +13,7 @@
     appliance_source_compose_path: "docker-compose/{{ host_role }}"
     appliance_compose_files:
       - docker-compose.yml
+    appliance_compose_files_filtered: "{{ appliance_compose_files | default([]) | select() | map('trim') | list }}"
 
   tasks:
   - name: Wait 600 seconds for target connection to become reachable/usable
@@ -33,7 +34,7 @@
       dest: "{{ appliance_dir }}/{{ item }}"
       owner: root
       mode: 0644
-    loop: "{{ appliance_compose_files }}"
+    loop: "{{ appliance_compose_files_filtered }}"
 
   - name: "Create startup file for local use of {{ host_role }}"
     template:
