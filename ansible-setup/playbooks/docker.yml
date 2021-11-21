@@ -10,10 +10,30 @@
       name: acl
       state: present
 
-  - name: Install docker and docker-compose
-    apt:
-      name: ['docker.io', 'docker-compose']
+  - name: Add Docker apt signing key
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+
+  - name: Add Docker apt repository
+    apt_repository:
+      repo: "deb https://download.docker.com/linux/ubuntu bionic stable" ###FIXME codename
       state: present
+
+  - name: Purge old docker-compose package
+    apt:
+      name: docker-compose
+      state: absent
+
+  - name: Install docker
+    apt:
+      name: ['docker-ce', 'docker-ce-cli', 'containerd.io']
+      state: present
+
+  - name: Install dockerized docker-compose
+    get_url:
+      url: https://github.com/docker/compose/releases/download/1.29.2/run.sh  ###FIXME version
+      dest: /usr/local/bin/docker-compose
+      mode: 0755
 
   - name: Put Docker daemon config in place (rotate docker logs)
     template:
