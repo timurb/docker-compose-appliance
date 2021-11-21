@@ -43,6 +43,13 @@
       owner: root
       mode: 0755
 
+  - name: "Create shutdown file for local use of {{ host_role }}"
+    template:
+      src: "templates/stop-local.sh.j2"
+      dest: "{{ appliance_dir }}/stop-local.sh"
+      owner: root
+      mode: 0755
+
 #  - name: "Start compose services for {{ host_role }}"
 #    command: docker-compose up -d
 #    args:
