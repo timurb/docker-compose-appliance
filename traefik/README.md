@@ -10,6 +10,22 @@ This is docker-compose file to run Traefik for proxying traffic to other applica
 - Dashboard is published on port 8090
 - Standalone `whoami` stack for debugging. Published on `:8090/whoami`
 
+## Usage:
+
+Docker Compose deployment:
+```
+docker-compose up -d
+docker-compose --file docker-compose.whoami.yml up -d  # Debug container
+```
+
+Docker Swarm deployment:
+```
+docker stack deploy --compose-file docker-compose.yml,docker-compose.swarm.yml traefik
+docker stack deploy --compose-file docker-compose.whoami.yml,docker-compose.swarm-app.yml whoami
+```
+
+Check URLs `:8090/dashboard/` (trailing slash required) and `:8090/whoami` to work.
+
 ## TODOs
 - SSL
 - Dashboard authentication

@@ -1,0 +1,8 @@
+version: '3.6'
+
+# Use this docker-compose file as override to connect your app to Traefik. This is not required in non-swarm mode
+
+networks:
+  default:
+    name: traefik_network
+    external: true

@@ -1,4 +1,4 @@
-version: '3'
+version: '3.6'
 
 services:
   traefik:
@@ -39,3 +39,7 @@ services:
           - "node.role==manager"
       labels:
         <<: *traefik-labels
+
+networks:
+  default:
+    name: traefik_network
