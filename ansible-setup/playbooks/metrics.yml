@@ -1,0 +1,8 @@
+- import_playbook: _appliance.yml
+  vars:
+    host_role: metrics   
+    appliance_autostart: "{{ metrics_autostart | default(true) }}"
+    appliance_swarm: "{{ swarm_mode | default(false) }}"
+#    appliance_compose_files:
+#      - docker-compose.yml
+#      - docker-compose.swarm.yml

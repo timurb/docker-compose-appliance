@@ -4,7 +4,10 @@
 # Required variables (play-scoped)
 # - host_role
 # - see also vars section
+#
 
+# Role-based deployment is always used because in swarm mode all appliances are deployed 
+# to master and rollout is managed  from inside docker-compose
 - hosts: "role-{{ host_role }}"
   gather_facts: no
   vars:
@@ -19,7 +22,7 @@
     appliance_autostart: false
     appliance_swarm: false
 
-    appliance_scripts:
+    appliance_scripts:     ###FIXME ??? use unified naming for both compose and swarm modes ???
       - "{% if not appliance_swarm | bool %} start-local.sh {% endif %}"
       - "{% if not appliance_swarm | bool %} stop-local.sh {% endif %}"
       - "{% if appliance_swarm | bool %} start-swarm.sh {% endif %}"
