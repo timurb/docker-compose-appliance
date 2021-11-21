@@ -63,7 +63,7 @@
       mode: 0755
     with_items: "{{ appliance_scripts_filtered }}"
 
-  - name: "Start compose services for {{ appliance_name }}"
+  - name: "Start services for {{ appliance_name }}"
     command: "./{{ appliance_start_command | trim }}"
     args:
       chdir: "{{ appliance_dir }}"

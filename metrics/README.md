@@ -7,9 +7,7 @@ This is compose file for metrics collectors to be used together with Prometheus:
 
 The collectors don't store metrics anywhere and just provide them to external monitoring system (Prometheus)
 
-## TODO
-
-- Support for Docker Swarm
+Deploying the stack to Docker Swarm automatically starts each of the containers on every Docker Swarm node.
 
 ## License and authors
 
