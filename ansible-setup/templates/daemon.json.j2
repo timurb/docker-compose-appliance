@@ -1,0 +1,8 @@
+{
+  {% if docker_config %}{{ docker_config }},{% endif %}
+  "log-driver": "local",
+  "log-opts": {
+    "max-size": "1G",
+    "max-file": "3"
+  }
+}

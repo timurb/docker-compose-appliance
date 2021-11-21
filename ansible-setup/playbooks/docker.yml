@@ -1,0 +1,42 @@
+- hosts: all
+  gather_facts: no
+
+  tasks:
+  - name: Wait 600 seconds for target connection to become reachable/usable
+    wait_for_connection:
+
+  - name: Install setfacl tool (used for ansible become invocation)
+    apt:
+      name: acl
+      state: present
+
+  - name: Install docker and docker-compose
+    apt:
+      name: ['docker.io', 'docker-compose']
+      state: present
+
+  - name: Put Docker daemon config in place (rotate docker logs)
+    template:
+      src: daemon.json.j2
+      dest: /etc/docker/daemon.json
+      owner: root
+      mode: 0644
+    notify:
+      - Restart Docker daemon
+
+  - name: Create group for running docker
+    group:
+      name: docker
+      state: present
+      system: true
+
+  - name: Manage ubuntu user
+    user:
+      name: ubuntu
+      state: present
+      groups: docker
+      append: true
+
+  handlers:
+  - name: Restart Docker daemon
+    command: "systemctl restart docker"

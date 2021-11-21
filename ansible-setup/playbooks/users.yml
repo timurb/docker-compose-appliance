@@ -1,0 +1,15 @@
+- hosts: all
+  gather_facts: no
+
+  tasks:
+  - name: Wait 600 seconds for target connection to become reachable/usable
+    wait_for_connection:
+
+  - name: Manage keys for ubuntu user
+    authorized_key:
+      user: ubuntu
+      state: present
+      key: "{{ item }}"
+      exclusive: yes
+    with_file:
+      - ssh_keys/ubuntu.keys

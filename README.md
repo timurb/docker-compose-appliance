@@ -16,6 +16,8 @@ All appliances should fulfil the following requirements:
 
 All appliances are sitting in their own directories. See appropriate README for them for implementation details and usage.
 
+All appliances can be installed to target hosts using Ansible: see [[ansible-setup]] for details.
+
 ## License and authors
 
 * Author:: Timur Batyrshin <timurb@hey.com>
