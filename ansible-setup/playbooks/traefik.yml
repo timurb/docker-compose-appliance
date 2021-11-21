@@ -1,0 +1,6 @@
+- import_playbook: _appliance.yml
+  vars:
+    host_role: traefik   
+    appliance_compose_files:
+      - docker-compose.yml
+#      - docker-compose.swarm.yml

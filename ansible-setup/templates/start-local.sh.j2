@@ -1,0 +1,3 @@
+#!/bin/sh
+
+docker-compose {% for item in appliance_compose_files -%}--file {{item}} {% endfor -%} up -d
