@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+# Prometheus/Grafana/Cadvisor setup loosely based on https://github.com/vegasbrianc/prometheus/blob/master/docker-compose.yml
+  prometheus:
+    image: prom/prometheus:v2.1.0
+    #    user: "1001"
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - ./prometheus/data:/prometheus_data
+    networks:
+      - rails_traefik
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus_data'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    restart: always
+
+    labels: # don't put your TLS configs here
+      - "traefik.http.routers.prometheus.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.prometheus.entrypoints=prometheus"
+      - "traefik.http.routers.prometheus.middlewares=auth"
+
+  grafana:
+    image: grafana/grafana
+    user: "1001"
+    volumes:
+      - ./grafana/data:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    networks:
+      - rails_traefik
+    env_file:
+      - ./grafana/config.monitoring
+    restart: always
+    labels: # don't put your TLS configs here
+      - "traefik.http.routers.grafana.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.grafana.entrypoints=grafana"
+      - "traefik.http.routers.grafana.middlewares=auth"
+
+networks:
+  rails_traefik:
+    external: true
