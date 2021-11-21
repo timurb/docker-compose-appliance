@@ -3,3 +3,5 @@ docker_config: >-
   "registry-mirrors": ["http://10.0.2.2:5000"]
 
 appliance_base_dir: "/"
+
+swarm_mode: true

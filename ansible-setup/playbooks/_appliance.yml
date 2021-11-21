@@ -11,10 +11,23 @@
     appliance_name: "{{ host_role }}"
     appliance_user: "{{ appliance_name }}"
     appliance_dir: "{{ appliance_base_dir | default('/') }}{{ appliance_name }}"
+
     appliance_source_compose_path: "docker-compose/{{ appliance_name }}"
     appliance_compose_files:
       - docker-compose.yml
+
+    appliance_autostart: false
+    appliance_swarm: false
+
+    appliance_scripts:
+      - "{% if not appliance_swarm | bool %} start-local.sh {% endif %}"
+      - "{% if not appliance_swarm | bool %} stop-local.sh {% endif %}"
+      - "{% if appliance_swarm | bool %} start-swarm.sh {% endif %}"
+      - "{% if appliance_swarm | bool %} stop-swarm.sh {% endif %}"
+
     appliance_compose_files_filtered: "{{ appliance_compose_files | default([]) | select() | map('trim') | list }}"
+    appliance_scripts_filtered: "{{ appliance_scripts | default([]) | select() | map('trim') | list }}"
+   
 
   tasks:
   - name: Wait 600 seconds for target connection to become reachable/usable
@@ -43,15 +56,12 @@
       dest: "{{ appliance_dir }}/{{ item }}"
       owner: root
       mode: 0755
-    with_items:
-      - start-local.sh
-      - stop-local.sh
-      - start-swarm.sh
-      - stop-swarm.sh
+    with_items: "{{ appliance_scripts_filtered }}"
 
-#  - name: "Start compose services for {{ appliance_name }}"
-#    command: docker-compose up -d
-#    args:
-#      chdir: "{{ appliance_dir }}"
-#    become: yes
-#    become_user: "{{ appliance_user }}"
+  - name: "Start compose services for {{ appliance_name }}"
+    command: ./start-local.sh	###FIXME: add support for Docker Swarm
+    args:
+      chdir: "{{ appliance_dir }}"
+    become: yes
+    become_user: "{{ appliance_user }}"
+    when: appliance_autostart | bool
