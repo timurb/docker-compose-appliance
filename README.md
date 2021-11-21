@@ -11,3 +11,8 @@ All appliances should fulfil the following requirements:
 - **Open-Closed Principle:** (open for extension, closed for modification) main docker-compose file should not require any changes for deployment. At the same time it should be easy to extend using overrides or environment variables
 - Should be able to run both on compose and swarm with minimal modification using Open-Closed Principle
 - Integrated with [Traefik](https://traefik.io) if applicable
+
+## License and authors
+
+Author:: Timur Batyrshin <timurb@hey.com>
+License:: MIT
