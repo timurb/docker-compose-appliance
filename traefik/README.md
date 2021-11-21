@@ -29,3 +29,8 @@ Check URLs `:8090/dashboard/` (trailing slash required) and `:8090/whoami` to wo
 ## TODOs
 - SSL
 - Dashboard authentication
+
+## License and authors
+
+* Author:: Timur Batyrshin <timurb@hey.com>
+* License:: MIT
