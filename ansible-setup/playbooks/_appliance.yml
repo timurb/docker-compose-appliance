@@ -30,12 +30,14 @@
       - "{% if appliance_swarm | bool %} stop-swarm.sh {% endif %}"
 
     appliance_additional_dirs: []  # relative to appliance_dir
+    appliance_additional_files: []  # relative to appliance_dir
 
     appliance_start_command: "{% if appliance_swarm | bool %} start-swarm.sh {% else %} start-local.sh {% endif %}"
 
     appliance_compose_files_filtered: "{{ appliance_compose_files | default([]) | select() | map('trim') | list }}"
     appliance_scripts_filtered: "{{ appliance_scripts | default([]) | select() | map('trim') | list }}"
     appliance_dirs_filtered: "{{ appliance_additional_dirs | default([]) | select() | map('trim') | list }}"
+    appliance_files_filtered: "{{ appliance_additional_files | default([]) | select() | map('trim') | list }}"
    
 
   tasks:
@@ -70,11 +72,19 @@
 
   - name: "Create additional directories for {{ appliance_name }}"
     file:
-      path: "{{ appliance_dir}}/{{ item }}"
+      path: "{{ appliance_dir }}/{{ item }}"
       owner: "{{ appliance_user }}"
       mode: 0755
       state: directory
     with_items: "{{ appliance_dirs_filtered }}"
+
+  - name: "Deploy additional files for {{ appliance_name }}"
+    template:
+      src: "{{ appliance_source_compose_path }}/{{ item }}"
+      dest: "{{ appliance_dir }}/{{ item }}"
+      owner: root
+      mode: 0644
+    loop: "{{ appliance_files_filtered }}"
 
   - name: "Start services for {{ appliance_name }}"
     command: "./{{ appliance_start_command | trim }}"
