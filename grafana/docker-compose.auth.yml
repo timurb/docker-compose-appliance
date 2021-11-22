@@ -1,0 +1,6 @@
+version: '3.6'
+
+services:
+  grafana:
+    labels:
+      traefik.http.routers.grafana.middlewares: auth

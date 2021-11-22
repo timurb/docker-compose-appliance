@@ -16,11 +16,14 @@
     appliance_user_id: "{{ omit }}"
     appliance_dir: "/{{ appliance_name }}"
 
+    appliance_auth: false
+
     appliance_source_compose_path: "docker-compose/{{ appliance_name }}"
     appliance_compose_files_base:
       - docker-compose.yml
       - "{% if not appliance_swarm | bool %} docker-compose.local.yml {% endif %}"
       - "{% if appliance_swarm | bool %} docker-compose.swarm.yml {% endif %}"
+      - "{% if appliance_auth | bool %} docker-compose.auth.yml {% endif %}"
 
     appliance_compose_files: []
 

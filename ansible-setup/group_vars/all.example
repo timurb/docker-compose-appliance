@@ -3,3 +3,4 @@ docker_config: >-
   "registry-mirrors": ["http://10.0.2.2:5000"]
 
 swarm_mode: false
+dashboards_auth: true

@@ -4,3 +4,4 @@
     appliance_name: metrics
     appliance_autostart: "{{ metrics_autostart | default(true) }}"
     appliance_swarm: "{{ swarm_mode | default(false) }}"
+    appliance_auth: "{{ dashboards_auth }}"
