@@ -1,6 +1,6 @@
 - import_playbook: _appliance.yml
   vars:
-    host_role: role-monitoring   
+    host_role: role_monitoring   
     appliance_name: prometheus
     appliance_user_id: 473
     appliance_autostart: "{{ prometheus_autostart | default(false) }}"

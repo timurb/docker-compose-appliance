@@ -1,6 +1,6 @@
 - import_playbook: _appliance.yml
   vars:
-    host_role: role-monitoring   
+    host_role: role_monitoring   
     appliance_name: grafana
     appliance_user_id: 472  # default grafana user in upstream
     appliance_autostart: "{{ grafana_autostart | default(false) }}"
