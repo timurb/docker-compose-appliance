@@ -30,3 +30,9 @@ services:
       - "traefik.enable=false"
     deploy:
       mode: global
+
+###FIXME: consider putting that into standalone docker-compose file
+networks:
+  default:
+    external: true
+    name: traefik_network
