@@ -8,10 +8,10 @@
 
 # Role-based deployment is always used because in swarm mode all appliances are deployed 
 # to master and rollout is managed  from inside docker-compose
-- hosts: "role-{{ host_role }}"
+- hosts: "{{ host_role }}"
   gather_facts: no
   vars:
-    appliance_name: "{{ host_role }}"
+    appliance_name: "{{ appliance_name | mandatory }}"
     appliance_user: "{{ appliance_name }}"
     appliance_dir: "{{ appliance_base_dir | default('/') }}{{ appliance_name }}"
 
