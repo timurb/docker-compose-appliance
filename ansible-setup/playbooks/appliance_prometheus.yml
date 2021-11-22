@@ -5,9 +5,6 @@
     appliance_user_id: 473
     appliance_autostart: "{{ prometheus_autostart | default(false) }}"
     appliance_swarm: "{{ swarm_mode | default(false) }}"
-    appliance_compose_files:
-      - docker-compose.yml
-#      - docker-compose.swarm.yml
     appliance_additional_dirs:
       - etc
       - data

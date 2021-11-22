@@ -17,8 +17,12 @@
     appliance_dir: "/{{ appliance_name }}"
 
     appliance_source_compose_path: "docker-compose/{{ appliance_name }}"
-    appliance_compose_files:
+    appliance_compose_files_base:
       - docker-compose.yml
+      - "{% if not appliance_swarm | bool %} docker-compose.local.yml {% endif %}"
+      - "{% if appliance_swarm | bool %} docker-compose.swarm.yml {% endif %}"
+
+    appliance_compose_files: []
 
     appliance_autostart: false
     appliance_swarm: false
@@ -34,7 +38,7 @@
 
     appliance_start_command: "{% if appliance_swarm | bool %} start-swarm.sh {% else %} start-local.sh {% endif %}"
 
-    appliance_compose_files_filtered: "{{ appliance_compose_files | default([]) | select() | map('trim') | list }}"
+    appliance_compose_files_filtered: "{{ (appliance_compose_files_base + appliance_compose_files) | default([]) | select() | map('trim') | list }}"
     appliance_scripts_filtered: "{{ appliance_scripts | default([]) | select() | map('trim') | list }}"
     appliance_dirs_filtered: "{{ appliance_additional_dirs | default([]) | select() | map('trim') | list }}"
     appliance_files_filtered: "{{ appliance_additional_files | default([]) | select() | map('trim') | list }}"
