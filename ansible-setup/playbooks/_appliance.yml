@@ -13,7 +13,7 @@
   vars:
     appliance_name: "{{ appliance_name | mandatory }}"
     appliance_user: "{{ appliance_name }}"
-    appliance_dir: "{{ appliance_base_dir | default('/') }}{{ appliance_name }}"
+    appliance_dir: "/{{ appliance_name }}"
 
     appliance_source_compose_path: "docker-compose/{{ appliance_name }}"
     appliance_compose_files:
