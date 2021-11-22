@@ -1,0 +1,16 @@
+- import_playbook: _appliance.yml
+  vars:
+    host_role: role-monitoring   
+    appliance_name: grafana
+    appliance_user_id: 472  # default grafana user in upstream
+    appliance_autostart: "{{ grafana_autostart | default(false) }}"
+    appliance_swarm: "{{ swarm_mode | default(false) }}"
+    appliance_compose_files:
+      - docker-compose.yml
+#      - docker-compose.swarm.yml
+    appliance_additional_dirs:
+      - data
+      - provisioning/dashboards
+      - provisioning/datasources
+    appliance_additional_files:
+      - provisioning/datasources/prometheus.yml
