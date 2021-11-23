@@ -18,6 +18,8 @@
 
     appliance_auth: false
 
+    appliance_environment: {}
+
     appliance_source_compose_path: "docker-compose/{{ appliance_name }}"
     appliance_compose_files_base:
       - docker-compose.yml
@@ -45,7 +47,6 @@
     appliance_scripts_filtered: "{{ appliance_scripts | default([]) | select() | map('trim') | list }}"
     appliance_dirs_filtered: "{{ appliance_additional_dirs | default([]) | select() | map('trim') | list }}"
     appliance_files_filtered: "{{ appliance_additional_files | default([]) | select() | map('trim') | list }}"
-   
 
   tasks:
   - name: Wait 600 seconds for target connection to become reachable/usable
@@ -84,6 +85,17 @@
       mode: 0755
       state: directory
     with_items: "{{ appliance_dirs_filtered }}"
+
+  - name: "Deploy .env file for {{ appliance_name }}"
+    copy:
+      dest: "{{ appliance_dir }}/.env"
+      owner: "{{ appliance_user }}"
+      mode: 0640
+      content: |
+        {%- for key, value in appliance_environment.items() -%}
+        {{key}}={{value}}
+        {% endfor -%}
+    when: appliance_environment | length > 0
 
   - name: "Deploy additional files for {{ appliance_name }}"
     template:

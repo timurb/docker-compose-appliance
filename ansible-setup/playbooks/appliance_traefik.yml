@@ -7,3 +7,4 @@
     appliance_compose_files:
       - "{% if traefik_whoami | bool %} docker-compose.whoami.yml {% endif %}"
     appliance_auth: "{{ dashboards_auth }}"
+    appliance_environment: "{{ traefik_env }}"

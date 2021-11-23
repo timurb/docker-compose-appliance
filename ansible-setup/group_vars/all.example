@@ -4,3 +4,7 @@ docker_config: >-
 
 swarm_mode: false
 dashboards_auth: true
+
+# default password is "letmein:letmein" -- redefine it in your setup using htpasswd -n letmein
+traefik_env:
+  TRAEFIK_PASSWORD: "letmein:$apr1$siZ6wIcE$KtJk6Qdt4rTEJURqYwP8l0"

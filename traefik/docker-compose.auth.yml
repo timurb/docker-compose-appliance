@@ -5,10 +5,7 @@ services:
     labels:
       traefik.http.routers.dashboard.middlewares: auth
 
-      # default password is "letmein:letmein" -- redefine it in your setup using htpasswd -n letmein
-      # IMPORTANT: Docker treats $ dollarsigns as variable substitution
-      #            You should replace single $ symbol to $$ in the whole hash
-      traefik.http.middlewares.auth.basicauth.users: 'letmein:$$apr1$$siZ6wIcE$$KtJk6Qdt4rTEJURqYwP8l0'
+      traefik.http.middlewares.auth.basicauth.users: '${TRAEFIK_PASSWORD}'
       traefik.http.middlewares.auth.basicauth.realm: dashboard
       traefik.http.middlewares.auth.basicauth.removeheader: "true"
 
