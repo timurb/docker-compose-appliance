@@ -1,8 +1,9 @@
 # Use https://github.com/timurb/lab-docker-registry as a dockerhub proxy
 docker_config: >-
-  "registry-mirrors": ["http://10.0.2.2:5000"]
+  "registry-mirrors": ["http://10.0.2.2:5000"],
+  "insecure-registries":  ["10.0.2.2:5000"]
 
-swarm_mode: true
+swarm_mode: false
 dashboards_auth: true
 
 # default password is "letmein:letmein" -- redefine it in your setup using htpasswd -n letmein

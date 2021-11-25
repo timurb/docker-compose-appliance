@@ -10,3 +10,6 @@ master   metrics_autostart=true
 
 [role_monitoring]
 master   grafana_autostart=true   prometheus_autostart=true
+
+[role_webapp]
+master   webapp_autostart=true
