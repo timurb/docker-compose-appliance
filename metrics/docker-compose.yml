@@ -3,7 +3,6 @@ version: '3.6'
 services:
   cadvisor:
     image: gcr.io/cadvisor/cadvisor
-    hostname: '{{.Node.ID}}'
     command: -logtostderr -docker_only
     volumes:
       - /:/rootfs:ro
@@ -13,7 +12,7 @@ services:
     restart: always
     labels: &cadvisor-labels
       traefik.enable: "false"
-    prometheus-job: cadvisor
+      prometheus-job: cadvisor
     deploy:
       mode: global
       labels:
@@ -21,7 +20,6 @@ services:
 
   node-exporter:
     image: prom/node-exporter
-    hostname: '{{.Node.ID}}'
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
