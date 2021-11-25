@@ -4,15 +4,27 @@ services:
   grafana:
     image: grafana/grafana
     user: "472"  # default grafana user in upstream
+    restart: always
+
     volumes:
       - ./data:/var/lib/grafana
       - ./provisioning/:/etc/grafana/provisioning/
+
     environment:
       GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
       GF_SERVER_SERVE_FROM_SUB_PATH: "true"
       GF_USERS_ALLOW_SIGN_UP: "false"
-    restart: always
-    labels:
+
+    labels: &grafana-labels
       traefik.enable: "true"
       traefik.http.routers.grafana.rule: "PathPrefix(`/grafana`)"
       traefik.http.routers.grafana.entrypoints: dashboard
+      traefik.http.services.grafana.loadbalancer.server.port: "3000"  # required for swarm mode
+
+    deploy:
+      placement:
+        constraints:
+          - "node.role==manager"   # we don't support deploying stateful apps anywhere but on manager node
+                                   ###FIXME: multi-manager setup is untested and might break
+      labels:
+        <<: *grafana-labels

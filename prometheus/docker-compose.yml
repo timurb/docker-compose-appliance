@@ -2,11 +2,12 @@ version: '3.6'
 
 services:
   prometheus:
-    image: prom/prometheus:v2.1.0
-    user: "473"
+    image: prom/prometheus:v2.31.1
+    user: "473:999"
     volumes:
       - ./etc/:/etc/prometheus/
       - ./data:/prometheus_data
+      - /var/run/docker.sock:/var/run/docker.sock:ro  # So that Traefik can listen to the Docker events
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus_data'
@@ -15,7 +16,16 @@ services:
       - '--web.external-url=/prometheus'
     restart: always
 
-    labels:
+    labels: &prometheus-labels
       traefik.enable: "true"
       traefik.http.routers.prometheus.rule: "PathPrefix(`/prometheus`)"
       traefik.http.routers.prometheus.entrypoints: dashboard
+      traefik.http.services.prometheus.loadbalancer.server.port: "9090"  # required for swarm mode
+
+    deploy:
+      placement:
+        constraints:
+          - "node.role==manager"   # we don't support deploying stateful apps anywhere but on manager node
+                                   ###FIXME: multi-manager setup is untested and might break
+      labels:
+        <<: *prometheus-labels

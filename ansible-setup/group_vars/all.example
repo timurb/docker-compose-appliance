@@ -2,7 +2,7 @@
 docker_config: >-
   "registry-mirrors": ["http://10.0.2.2:5000"]
 
-swarm_mode: false
+swarm_mode: true
 dashboards_auth: true
 
 # default password is "letmein:letmein" -- redefine it in your setup using htpasswd -n letmein

@@ -2,6 +2,7 @@
   vars:
     host_role: role_traefik   
     appliance_name: traefik
+    appliance_user_id: 470
     appliance_autostart: "{{ traefik_autostart | default(true) }}"
     appliance_swarm: "{{ swarm_mode | default(false) }}"
     appliance_compose_files:

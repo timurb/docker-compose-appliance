@@ -15,11 +15,39 @@ scrape_configs:
          - targets: ['traefik:8080']
 
   - job_name: 'cadvisor'
-    scrape_interval: 5s
-    static_configs:
-         - targets: ['cadvisor:8080']
+    dockerswarm_sd_configs:
+      - host: unix:///var/run/docker.sock # You can also use http/https to connect to the Docker daemon.
+        role: tasks
+        port: 8080
+    relabel_configs:
+      # Only keep containers that should be running.
+      - source_labels: [__meta_dockerswarm_task_desired_state]
+        regex: running
+        action: keep
+      # Only keep containers that have a `prometheus-job` label.
+      - source_labels: [__meta_dockerswarm_service_label_prometheus_job]
+        regex: cadvisor
+        action: keep
+      # Use the task labels that are prefixed by `prometheus-`.
+      - regex: __meta_dockerswarm_service_label_prometheus_(.+)
+        action: labelmap
+        replacement: $1
 
   - job_name: 'node-exporter'
-    scrape_interval: 5s
-    static_configs:
-         - targets: ['node-exporter:9100']
+    dockerswarm_sd_configs:
+      - host: unix:///var/run/docker.sock # You can also use http/https to connect to the Docker daemon.
+        role: tasks
+        port: 9100
+    relabel_configs:
+      # Only keep containers that should be running.
+      - source_labels: [__meta_dockerswarm_task_desired_state]
+        regex: running
+        action: keep
+      # Only keep containers that have a `prometheus-job` label.
+      - source_labels: [__meta_dockerswarm_service_label_prometheus_job]
+        regex: node-exporter
+        action: keep
+      # Use the task labels that are prefixed by `prometheus-`.
+      - regex: __meta_dockerswarm_service_label_prometheus_(.+)
+        action: labelmap
+        replacement: $1
