@@ -10,4 +10,4 @@
       - etc
       - data
     appliance_additional_files:
-      - etc/prometheus.yml
+      etc/prometheus.yml: "{%- if swarm_mode | default(false) -%} etc/prometheus.swarm.yml {%- else -%} etc/prometheus.local.yml {%- endif %}"

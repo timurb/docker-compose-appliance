@@ -16,6 +16,8 @@
     appliance_user_id: "{{ omit }}"
     appliance_dir: "/{{ appliance_name }}"
 
+    appliance_swarm: false
+    appliance_autostart: false
     appliance_auth: false
 
     appliance_environment: {}
@@ -29,9 +31,6 @@
 
     appliance_compose_files: []
 
-    appliance_autostart: false
-    appliance_swarm: false
-
     appliance_scripts:     ###FIXME ??? use unified naming for both compose and swarm modes ???
       - "{% if not appliance_swarm | bool %} start-local.sh {% endif %}"
       - "{% if not appliance_swarm | bool %} stop-local.sh {% endif %}"
@@ -39,14 +38,13 @@
       - "{% if appliance_swarm | bool %} stop-swarm.sh {% endif %}"
 
     appliance_additional_dirs: []  # relative to appliance_dir
-    appliance_additional_files: []  # relative to appliance_dir
+    appliance_additional_files: {}  # relative to appliance_dir
 
     appliance_start_command: "{% if appliance_swarm | bool %} start-swarm.sh {% else %} start-local.sh {% endif %}"
 
     appliance_compose_files_filtered: "{{ (appliance_compose_files_base + appliance_compose_files) | default([]) | select() | map('trim') | list }}"
     appliance_scripts_filtered: "{{ appliance_scripts | default([]) | select() | map('trim') | list }}"
     appliance_dirs_filtered: "{{ appliance_additional_dirs | default([]) | select() | map('trim') | list }}"
-    appliance_files_filtered: "{{ appliance_additional_files | default([]) | select() | map('trim') | list }}"
 
   tasks:
   - name: Wait 600 seconds for target connection to become reachable/usable
@@ -99,11 +97,11 @@
 
   - name: "Deploy additional files for {{ appliance_name }}"
     template:
-      src: "{{ appliance_source_compose_path }}/{{ item }}"
-      dest: "{{ appliance_dir }}/{{ item }}"
+      src: "{{ appliance_source_compose_path }}/{{ item.value }}"
+      dest: "{{ appliance_dir }}/{{ item.key }}"
       owner: root
       mode: 0644
-    loop: "{{ appliance_files_filtered }}"
+    loop: "{{ appliance_additional_files | dict2items }}"
 
   - name: "Start services for {{ appliance_name }}"
     command: "./{{ appliance_start_command | trim }}"

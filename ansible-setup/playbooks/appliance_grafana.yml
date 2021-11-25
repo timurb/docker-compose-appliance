@@ -11,4 +11,4 @@
       - provisioning/dashboards
       - provisioning/datasources
     appliance_additional_files:
-      - provisioning/datasources/prometheus.yml
+      provisioning/datasources/prometheus.yml: provisioning/datasources/prometheus.yml 
