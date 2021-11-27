@@ -13,3 +13,6 @@ master   grafana_autostart=true   prometheus_autostart=true
 
 [role_webapp]
 master   webapp_autostart=true
+
+[role_docker_system]
+master   docker_system_autostart=true

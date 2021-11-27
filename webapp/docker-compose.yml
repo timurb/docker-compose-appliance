@@ -3,11 +3,13 @@ version: '3.6'
 services:
   webapp:
     image: 10.0.2.2:5000/http-pong ###FIXME
+
     configs:
      - source: webapp
        target: /app/.env
     env_file:
      - env
+
     labels: &webapp-labels
       traefik.enable: "true"
       traefik.http.routers.webapp.rule: "(PathPrefix(`/`))"
