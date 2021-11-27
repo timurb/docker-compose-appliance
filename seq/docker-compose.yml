@@ -16,14 +16,6 @@ services:
       traefik.http.routers.seq.rule: "PathPrefix(`/`)"
       traefik.http.routers.seq.entrypoints: seq
 
-    logging:
-      driver: gelf
-      options:
-        gelf-address: udp://seq-input-gelf:12201
-
-    depends_on:
-      - seq-input-gelf
-
   seq-input-gelf:
     image: datalust/seq-input-gelf
     user: "474:999"

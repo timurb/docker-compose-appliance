@@ -19,6 +19,7 @@
     appliance_swarm: false
     appliance_autostart: false
     appliance_auth: false
+    appliance_logging: false
 
     appliance_environment: {}
 
@@ -28,6 +29,7 @@
       - "{% if not appliance_swarm | bool %} docker-compose.local.yml {% endif %}"
       - "{% if appliance_swarm | bool %} docker-compose.swarm.yml {% endif %}"
       - "{% if appliance_auth | bool %} docker-compose.auth.yml {% endif %}"
+      - "{% if appliance_logging | default(false) %} docker-compose.logging.{{ appliance_logging }}.yml {% endif %}"
 
     appliance_compose_files: []
 

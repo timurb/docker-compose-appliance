@@ -1,0 +1,8 @@
+version: '3.6'
+
+services:
+  webapp:
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://seq-input-gelf:12201

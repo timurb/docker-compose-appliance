@@ -6,6 +6,7 @@
     appliance_autostart: "{{ grafana_autostart | default(false) }}"
     appliance_swarm: "{{ swarm_mode | default(false) }}"
     appliance_auth: "{{ dashboards_auth }}"
+    appliance_logging: "{{ logging_type | default(false) }}"
     appliance_additional_dirs:
       - data
       - provisioning/dashboards

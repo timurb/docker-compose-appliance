@@ -1,0 +1,8 @@
+version: '3.6'
+
+services:
+  traefik:
+    environment:
+      TRAEFIK_ENTRYPOINTS_SEQ_ADDRESS: ":8092"
+    ports:
+      - "8092:8092"

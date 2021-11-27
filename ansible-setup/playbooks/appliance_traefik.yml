@@ -7,5 +7,7 @@
     appliance_swarm: "{{ swarm_mode | default(false) }}"
     appliance_compose_files:
       - "{% if traefik_whoami | bool %} docker-compose.whoami.yml {% endif %}"
+      - "{% if logging_type | default(false) %} docker-compose.endpoint.{{ logging_type }}.yml {% endif %}"
     appliance_auth: "{{ dashboards_auth }}"
+    # appliance_logging: "{{ logging_type }}"  # appliance_logging not supported in automatic mode
     appliance_environment: "{{ traefik_env }}"
