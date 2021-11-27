@@ -1,0 +1,6 @@
+version: '3.6'
+
+services:
+  seq:
+    labels:
+      traefik.http.routers.seq.middlewares: auth

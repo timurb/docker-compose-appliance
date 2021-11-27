@@ -1,0 +1,33 @@
+version: '3.6'
+
+services:
+  seq:
+    image: datalust/seq:2021.3
+    user: "474:999"
+    volumes:
+      - ./data:/data
+    restart: always
+
+    environment:
+      ACCEPT_EULA: Y
+
+    labels: &seq-labels
+      traefik.enable: "true"
+      traefik.http.routers.seq.rule: "PathPrefix(`/`)"
+      traefik.http.routers.seq.entrypoints: seq
+
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://seq-input-gelf:12201
+
+    depends_on:
+      - seq-input-gelf
+
+  seq-input-gelf:
+    image: datalust/seq-input-gelf
+    user: "474:999"
+    restart: always
+
+    environment:
+      SEQ_ADDRESS: http://seq:5341

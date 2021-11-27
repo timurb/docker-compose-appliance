@@ -1,0 +1,10 @@
+- import_playbook: _appliance.yml
+  vars:
+    host_role: role_seq   
+    appliance_name: seq
+    appliance_user_id: 474
+    appliance_autostart: "{{ seq_autostart | default(false) }}"
+    appliance_swarm: false
+    appliance_auth: "{{ dashboards_auth }}"
+    appliance_additional_dirs:
+      - data

@@ -16,3 +16,7 @@ master   webapp_autostart=true
 
 [role_docker_system]
 master   docker_system_autostart=true
+
+[role_seq]
+master   seq_autostart=true
+
