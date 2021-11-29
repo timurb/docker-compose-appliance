@@ -23,3 +23,17 @@ services:
 
     environment:
       SEQ_ADDRESS: http://seq:5341
+    labels:
+      logspout.exclude: 'true'
+
+  logspout-gelf:
+    image: erthad/logspout-gelf-tls
+    volumes:
+      - /etc/hostname:/etc/host_hostname:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: gelf://seq-input-gelf:12201
+    restart: always
+    environment:
+      EXCLUDE_LABEL: logspout.exclude
+    labels:
+      logspout.exclude: 'true'

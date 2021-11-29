@@ -6,7 +6,6 @@
     appliance_autostart: "{{ prometheus_autostart | default(false) }}"
     appliance_swarm: "{{ swarm_mode | default(false) }}"
     appliance_auth: "{{ dashboards_auth }}"
-    appliance_logging: "{{ logging_type | default(false) }}"
     appliance_additional_dirs:
       - etc
       - data

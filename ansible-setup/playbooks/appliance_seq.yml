@@ -6,6 +6,5 @@
     appliance_autostart: "{{ seq_autostart | default(false) }}"
     appliance_swarm: false
     appliance_auth: "{{ dashboards_auth }}"
-    appliance_logging: "{{ logging_type | default(false) }}"
     appliance_additional_dirs:
       - data
