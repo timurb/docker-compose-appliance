@@ -3,6 +3,7 @@ version: '3.6'
 services:
   docker-hoster:
     image: dvdarias/docker-hoster
+    restart: always
     volumes:
       - /etc/hosts:/tmp/hosts
       - /var/run/docker.sock:/tmp/docker.sock:ro
