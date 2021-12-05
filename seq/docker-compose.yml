@@ -3,7 +3,7 @@ version: '3.6'
 services:
   seq:
     image: datalust/seq:2021.3
-    user: "474:998"  # make sure 998 is your docker user group
+    user: "474"
     volumes:
       - ./data:/data
     restart: always
@@ -18,7 +18,7 @@ services:
 
   seq-input-gelf:
     image: datalust/seq-input-gelf
-    user: "474:998"  # make sure 998 is your docker user group
+    user: "474"
     restart: always
 
     environment:
@@ -28,6 +28,7 @@ services:
 
   logspout-gelf:
     image: erthad/logspout-gelf-tls
+    user: "474:998"  # make sure 998 is your docker user group
     volumes:
       - /etc/hostname:/etc/host_hostname:ro
       - /var/run/docker.sock:/var/run/docker.sock
