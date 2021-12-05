@@ -3,7 +3,7 @@ version: '3.6'
 services:
   traefik:
     image: traefik:v2.5
-    user: "470:999"
+    user: "470:998"  # make sure 998 is your docker user group
 
     restart: always
 

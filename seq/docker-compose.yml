@@ -3,7 +3,7 @@ version: '3.6'
 services:
   seq:
     image: datalust/seq:2021.3
-    user: "474:999"
+    user: "474:998"  # make sure 998 is your docker user group
     volumes:
       - ./data:/data
     restart: always
@@ -18,7 +18,7 @@ services:
 
   seq-input-gelf:
     image: datalust/seq-input-gelf
-    user: "474:999"
+    user: "474:998"  # make sure 998 is your docker user group
     restart: always
 
     environment:

@@ -3,7 +3,7 @@ version: '3.6'
 services:
   prometheus:
     image: prom/prometheus:v2.31.1
-    user: "473:999"
+    user: "473:998"  # make sure 998 is your docker user group
     volumes:
       - ./etc/:/etc/prometheus/
       - ./data:/prometheus_data
