@@ -2,7 +2,7 @@ version: '3.6'
 
 services:
   webapp:
-    image: 10.0.2.2:5000/http-pong ###FIXME
+    image: cr.yandex/crphgvpkia3bns6raffo/http-pong ###FIXME
     restart: always
 
     configs:

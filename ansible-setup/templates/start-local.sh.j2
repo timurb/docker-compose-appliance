@@ -1,3 +1,9 @@
 #!/bin/sh
 
+{% if appliance_yandex -%}
+docker login --username iam \
+             --password $(yc iam create-token) \
+              cr.yandex
+{% endif -%}
+
 docker-compose {% for item in appliance_compose_files_filtered -%}--file {{item}} {% endfor %} up -d --remove-orphans

@@ -1,3 +1,9 @@
 #!/bin/sh
 
+{% if appliance_yandex -%}
+docker login --username iam \
+             --password $(yc iam create-token) \
+              cr.yandex
+{% endif -%}
+
 docker stack deploy --compose-file {{ appliance_compose_files_filtered | join(',') }} {{ appliance_name }}

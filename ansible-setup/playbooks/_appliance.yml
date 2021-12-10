@@ -9,7 +9,7 @@
 # Role-based deployment is always used because in swarm mode all appliances are deployed 
 # to master and rollout is managed  from inside docker-compose
 - hosts: "{{ host_role }}"
-  gather_facts: no
+  gather_facts: "{{ appliance_gather_facts | default('no') }}"
   vars:
     appliance_name: "{{ appliance_name | mandatory }}"
     appliance_user: "{{ appliance_name }}"
@@ -42,6 +42,8 @@
     appliance_additional_files: {}  # relative to appliance_dir
 
     appliance_start_command: "{% if appliance_swarm | bool %} start-swarm.sh {% else %} start-local.sh {% endif %}"
+
+    appliance_yandex: "{{ ansible_facts['system_vendor'] | default('') == 'Yandex' }}"
 
     appliance_compose_files_filtered: "{{ (appliance_compose_files_base + appliance_compose_files) | default([]) | select() | map('trim') | list }}"
     appliance_scripts_filtered: "{{ appliance_scripts | default([]) | select() | map('trim') | list }}"
