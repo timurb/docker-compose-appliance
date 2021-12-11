@@ -5,6 +5,6 @@
     appliance_user_id: 789
     appliance_autostart: "{{ webapp_autostart | default(false) }}"
     appliance_swarm: "{{ swarm_mode | default(false) }}"
-    appliance_additional_files:
-      env: env
+    appliance_additional_files: "{{ webapp_additional_files | default({}) }}"
+    appliance_compose_files: "{{ webapp_compose_files | default([]) }}"
     appliance_gather_facts: yes

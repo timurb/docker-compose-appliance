@@ -4,6 +4,7 @@
 $(dirname $0)/run_ansible.sh \
   ./playbooks/appliance_network.yml \
   ./playbooks/appliance_traefik.yml \
+  ./playbooks/appliance_caddy.yml \
   ./playbooks/appliance_docker_system.yml \
   ./playbooks/appliance_seq.yml \
   ./playbooks/appliance_metrics.yml \

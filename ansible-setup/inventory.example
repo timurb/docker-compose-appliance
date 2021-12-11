@@ -3,7 +3,10 @@ master   ansible_ssh_host=192.168.77.10   ansible_ssh_user=vagrant
 slave    ansible_ssh_host=192.168.77.11   ansible_ssh_user=vagrant
 
 [role_traefik]
-master   traefik_whoami=true   traefik_autostart=true
+#master   traefik_whoami=true   traefik_autostart=true
+
+[role_caddy]
+master   caddy_autostart=true
 
 [role_metrics]
 master   metrics_autostart=true
@@ -12,7 +15,7 @@ master   metrics_autostart=true
 master   grafana_autostart=true   prometheus_autostart=true
 
 [role_webapp]
-master   webapp_autostart=true
+master   webapp_autostart=false
 
 [role_docker_system]
 master   docker_system_autostart=true

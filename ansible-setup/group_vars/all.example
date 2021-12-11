@@ -12,3 +12,6 @@ traefik_env:
 
 logging_type: seq
 balancer_type: caddy
+
+webapp_additional_files:
+  docker-compose.override.yml: docker-compose.override.yml
