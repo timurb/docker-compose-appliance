@@ -1,0 +1,11 @@
+version: '3.6'
+
+services:
+  init-networks:
+    image: alpine
+    command: /bin/false
+    restart: "no"
+
+networks:
+  default:
+    name: appliances
