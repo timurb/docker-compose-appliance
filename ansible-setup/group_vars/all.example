@@ -11,3 +11,4 @@ traefik_env:
   TRAEFIK_PASSWORD: "letmein:$apr1$siZ6wIcE$KtJk6Qdt4rTEJURqYwP8l0"
 
 logging_type: seq
+balancer_type: caddy
