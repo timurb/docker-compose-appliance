@@ -1,0 +1,5 @@
+# Example caddyfile for the webapp
+http://:80 {
+
+  reverse_proxy webapp
+}

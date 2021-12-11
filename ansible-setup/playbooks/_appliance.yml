@@ -47,6 +47,8 @@
     appliance_scripts_filtered: "{{ appliance_scripts | default([]) | select() | map('trim') | list }}"
     appliance_dirs_filtered: "{{ appliance_additional_dirs | default([]) | select() | map('trim') | list }}"
 
+    appliance_pre_start_command: false
+
   tasks:
   - name: Wait 600 seconds for target connection to become reachable/usable
     wait_for_connection:

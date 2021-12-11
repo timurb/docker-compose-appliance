@@ -1,0 +1,14 @@
+- import_playbook: _appliance.yml
+  vars:
+    host_role: role_caddy   
+    appliance_name: caddy
+    appliance_user_id: 475
+    appliance_autostart: "{{ caddy_autostart | default(false) }}"
+    appliance_swarm: "{{ swarm_mode | default(false) }}"
+    appliance_additional_dirs:
+      - config
+      - data
+    appliance_additional_files:
+      Caddyfile.system: Caddyfile.system
+      Caddyfile: Caddyfile
+    appliance_pre_start_command: cat Caddyfile.system Caddyfile > Caddyfile.generated

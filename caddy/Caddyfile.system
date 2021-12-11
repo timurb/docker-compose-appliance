@@ -1,0 +1,34 @@
+{
+  admin off
+}
+
+(credentials) {
+    letmein JDJhJDE0JEY4RURFVWdTNXpWeTBVNGZUQzUuWE9nTXF0NWg2WXFlbDhyVTdtcER1U2hOcm00OTV6NjRX
+}
+
+http://:8090 {
+  request_header -Authorization
+
+  basicauth {
+    import credentials
+  }
+
+  route /seq/* {
+    uri strip_prefix /seq
+    reverse_proxy seq
+  }
+
+  route /prometheus/* {
+    uri strip_prefix /seq
+    reverse_proxy prometheus:9090
+  }
+
+  route /grafana/* {
+    uri strip_prefix /seq
+    reverse_proxy grafana:3000
+  }
+}
+
+http://:2019 {
+  metrics /metrics
+}

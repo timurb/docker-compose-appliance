@@ -1,0 +1,19 @@
+version: '3.6'
+
+services:
+  caddy:
+    image: caddy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8090:8090"
+    volumes:
+      - ./Caddyfile.generated:/etc/caddy/Caddyfile # for use without appliance playbooks remove ".generated"
+      - ./data:/data
+      - ./config:/config
+
+networks:
+  default:
+    external: true
+    name: appliances

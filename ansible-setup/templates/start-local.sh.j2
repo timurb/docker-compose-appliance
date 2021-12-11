@@ -6,4 +6,8 @@ docker login --username iam \
               cr.yandex
 {% endif -%}
 
+{% if appliance_pre_start_command -%}
+{{ appliance_pre_start_command }}
+{% endif -%}
+
 docker-compose {% for item in appliance_compose_files_filtered -%}--file {{item}} {% endfor %} up -d --remove-orphans
