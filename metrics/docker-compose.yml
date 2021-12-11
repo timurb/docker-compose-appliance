@@ -37,3 +37,8 @@ services:
       mode: global
       labels:
         <<: *node-exporter-labels
+
+networks:
+  default:
+    external: true
+    name: appliances

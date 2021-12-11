@@ -29,3 +29,8 @@ services:
                                    ###FIXME: multi-manager setup is untested and might break
       labels:
         <<: *prometheus-labels
+
+networks:
+  default:
+    external: true
+    name: appliances

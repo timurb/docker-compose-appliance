@@ -7,3 +7,8 @@ services:
     volumes:
       - /etc/hosts:/tmp/hosts
       - /var/run/docker.sock:/tmp/docker.sock:ro
+
+networks:
+  default:
+    external: true
+    name: appliances
