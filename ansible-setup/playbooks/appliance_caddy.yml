@@ -11,4 +11,4 @@
     appliance_additional_files:
       Caddyfile.system: Caddyfile.system
       Caddyfile: Caddyfile
-    appliance_pre_start_command: sudo -u caddy cat Caddyfile.system Caddyfile > Caddyfile.generated
+    appliance_pre_start_command: cat Caddyfile.system Caddyfile > Caddyfile.generated
