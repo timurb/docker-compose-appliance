@@ -4,6 +4,7 @@ services:
   restic:
     image: erthad/restic-exporter
     command: /bin/false
+    hostname: "${HOSTNAME}"
     env_file:
      - .restic_config
     volumes:
