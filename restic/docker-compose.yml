@@ -1,0 +1,12 @@
+version: '3.6'
+
+services:
+  restic:
+    image: erthad/restic-exporter
+    command: /bin/false
+    env_file:
+     - .restic_config
+    volumes:
+     - /app:/data:ro
+     - ./stats:/stats:rw
+     - ./restic-exporter.yaml:/stats/restic-exporter.yaml:ro

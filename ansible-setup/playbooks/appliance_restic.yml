@@ -1,0 +1,9 @@
+- import_playbook: _appliance.yml
+  vars:
+    host_role: role_restic
+    appliance_name: restic
+    appliance_user_id: 465
+    appliance_scripts:
+     - restic-run.sh
+    appliance_additional_dirs:
+     - stats

@@ -22,3 +22,5 @@ master   docker_system_autostart=true
 [role_seq]
 master   seq_autostart=true
 
+[role_restic]
+master

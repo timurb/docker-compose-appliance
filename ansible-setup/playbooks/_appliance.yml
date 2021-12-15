@@ -39,6 +39,7 @@
     appliance_additional_dirs: []  # relative to appliance_dir
     appliance_additional_files: {}  # relative to appliance_dir
 
+    appliance_pre_start_command: false
     appliance_start_command: "{% if appliance_swarm | bool %} start-swarm.sh {% else %} start-local.sh {% endif %}"
 
     appliance_yandex: "{{ ansible_facts['system_vendor'] | default('') == 'Yandex' }}"
@@ -47,7 +48,6 @@
     appliance_scripts_filtered: "{{ appliance_scripts | default([]) | select() | map('trim') | list }}"
     appliance_dirs_filtered: "{{ appliance_additional_dirs | default([]) | select() | map('trim') | list }}"
 
-    appliance_pre_start_command: false
 
   tasks:
   - name: Wait 600 seconds for target connection to become reachable/usable
