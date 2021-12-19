@@ -7,4 +7,4 @@ usage() {
 
 [ -z "$1" ] && usage
 
-docker run --rm -it --mount type=bind,source=$1,target=/install erthad/appliance-caddy
+docker run --rm -it --pull always --mount type=bind,source=$1,target=/install erthad/appliance-caddy
