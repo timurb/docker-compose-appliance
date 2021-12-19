@@ -2,8 +2,10 @@
 
 ## Configuration
 ```
-FROM appliance-installer
+FROM erthad/appliance-installer
+
 ENV APPLIANCE_NAME=traefik
+COPY . /installer
 ```
 
 ## Usage
