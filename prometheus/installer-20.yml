@@ -1,0 +1,24 @@
+- hosts: localhost
+  gather_facts: no
+  vars:
+    install_dir: /install
+    appliance_name: "{{ lookup('env', 'APPLIANCE_NAME') | default('installer', True) }}"
+    appliance_dir: "{{ install_dir }}/{{ lookup('env', 'APPLIANCE_DIR') | default(appliance_name, True) }}"
+    docker_mode: "{{ lookup('env', 'DOCKER_MODE') | default('local', True) }}"
+    balancer_type: "{{ lookup('env', 'BALANCER_TYPE') | default('caddy', True) }}"
+
+  tasks:
+  - name: Create additional dirs
+    file:
+      path: "{{ appliance_dir }}/{{ item }}"
+      state: directory
+    with_items:
+      - data
+      - etc
+
+  - name: "Deploy prometheus config"
+    template:
+      src: "{%- if docker_mode == 'swarm' -%} etc/prometheus.swarm.yml {%- else -%} etc/prometheus.local.{{ balancer_type}}.yml {%- endif %}"
+      dest: "{{ appliance_dir }}/etc/prometheus.yml"
+      owner: root
+      mode: 0644  
