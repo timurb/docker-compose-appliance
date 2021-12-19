@@ -11,4 +11,5 @@ mkdir -p $1
 
 cp -i appliance-installer/_* $1
 ln -is ../appliance-installer/.dockerignore $1
+echo "!!! Edit and update the files below !!!"
 grep -r CHANGEME $1
