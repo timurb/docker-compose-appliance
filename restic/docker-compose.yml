@@ -6,8 +6,8 @@ services:
     command: /bin/false
     hostname: "${HOSTNAME}"
     env_file:
-     - .restic_config
+     - restic_config
     volumes:
      - /app:/data:ro
-     - ./stats:/stats:rw
+     - ../metrics-stats:/stats:rw
      - ./restic-exporter.yaml:/stats/restic-exporter.yaml:ro
