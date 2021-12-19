@@ -1,0 +1,32 @@
+- hosts: localhost
+  gather_facts: no
+  vars:
+    install_dir: /install
+    appliance_name: "{{ lookup('env', 'APPLIANCE_NAME') | default('installer', True) }}"
+    appliance_dir: "{{ install_dir }}/{{ lookup('env', 'APPLIANCE_DIR') | default(appliance_name, True) }}"
+    docker_mode: "{{ lookup('env', 'DOCKER_MODE') | default('local', True) }}"
+    balancer_type: "{{ lookup('env', 'BALANCER_TYPE') | default('caddy', True) }}"
+
+  tasks:
+  - name: Create additional dirs
+    file:
+      path: "{{ appliance_dir }}/{{ item }}"
+      state: directory
+    with_items:
+      - data
+      - config
+
+  - name: "Deploy system Caddyfile"
+    template:
+      src: Caddyfile.system
+      dest: "{{ appliance_dir }}/Caddyfile.system"
+      owner: root
+      mode: 0644  
+
+  - name: "Deploy example Caddyfile"
+    copy:
+      src: Caddyfile.example
+      dest: "{{ appliance_dir }}/Caddyfile"
+      force: no		# prevent overwriting if exists
+      owner: root
+      mode: 0644
