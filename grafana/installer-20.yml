@@ -1,0 +1,23 @@
+- hosts: localhost
+  gather_facts: no
+  vars:
+    install_dir: /install
+    appliance_name: "{{ lookup('env', 'APPLIANCE_NAME') | default('installer', True) }}"
+    appliance_dir: "{{ install_dir }}/{{ lookup('env', 'APPLIANCE_DIR') | default(appliance_name, True) }}"
+
+  tasks:
+  - name: Manage installation dir
+    file:
+      path: "{{ item }}"
+      state: directory
+    with_items:
+      - data
+      - provisioning/dashboards
+      - provisioning/datasources
+
+  - name: "Deploy prometheus datasource"
+    template:
+      src: provisioning/datasources/prometheus.yml
+      dest: "{{ appliance_dir }}/provisioning/datasources/prometheus.yml"
+      owner: root
+      mode: 0644  
