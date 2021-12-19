@@ -1,0 +1,29 @@
+- hosts: localhost
+  gather_facts: no
+  vars:
+    install_dir: /install
+    appliance_name: "{{ lookup('env', 'APPLIANCE_NAME') | default('installer', True) }}"
+    appliance_dir: "{{ install_dir }}/{{ lookup('env', 'APPLIANCE_DIR') | default(appliance_name, True) }}"
+
+  tasks:
+  - name: Manage installation dir
+    file:
+      path: "{{ appliance_dir }}"
+      state: directory
+
+  - name: "Deploy docker-compose file for {{ appliance_name }}"
+    template:
+      src: docker-compose.yml
+      dest: "{{ appliance_dir }}/docker-compose.yml"
+      owner: root
+      mode: 0644  
+
+  - name: "Create management scripts for {{ appliance_name }}"
+    template:
+      src: "{{ item }}"
+      dest: "{{ appliance_dir }}/{{ item }}"
+      owner: root
+      mode: 0755
+    with_items:
+    - start.sh
+    - stop.sh
