@@ -1,0 +1,1 @@
+45 00 * * * root        /app/restic/restic-run.sh > /tmp/restic 2> /tmp/restic.2

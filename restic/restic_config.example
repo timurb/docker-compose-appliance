@@ -1,0 +1,5 @@
+RESTIC_REPOSITORY='s3:https://storage.yandexcloud.net/zurdeploy-backups'
+RESTIC_PASSWORD=zurdeploy-secure-password
+AWS_ACCESS_KEY_ID='YU5mYAeZsjqhOKIq8f'
+AWS_SECRET_ACCESS_KEY='VmJD8dsyXEpmBgFtLPhR7Z7L9uAkNOHKBLhv8N'
+AWS_DEFAULT_REGION=ru-central1

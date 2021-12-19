@@ -1,0 +1,4 @@
+# restic-exporter.yaml
+'restic-backups-app':
+    repository: 's3:https://storage.yandexcloud.net/zurdeploy-backups'
+    password: 'zurdeploy-secure-password'
