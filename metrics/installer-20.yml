@@ -1,0 +1,13 @@
+- hosts: localhost
+  gather_facts: no
+  vars:
+    install_dir: /install
+    appliance_name: "{{ lookup('env', 'APPLIANCE_NAME') | default('installer', True) }}"
+    appliance_dir: "{{ install_dir }}/{{ lookup('env', 'APPLIANCE_DIR') | default(appliance_name, True) }}"
+
+  tasks:
+  - name: Create dir for stats
+    file:
+      path: "{{ appliance_dir }}/../metrics-stats"
+      mode: 0777
+      state: directory
