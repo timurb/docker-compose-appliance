@@ -6,9 +6,9 @@
     appliance_dir: "{{ install_dir }}/{{ lookup('env', 'APPLIANCE_DIR') | default(appliance_name, True) }}"
 
   tasks:
-  - name: Manage installation dir
+  - name: Create additional dirs
     file:
-      path: "{{ item }}"
+      path: "{{ appliance_dir }}/{{ item }}"
       state: directory
     with_items:
       - data
