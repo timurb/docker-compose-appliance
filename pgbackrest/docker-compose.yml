@@ -1,0 +1,17 @@
+version: '3.6'
+
+services:
+  pgbackrest:
+    image: woblerr/pgbackrest
+    command: /bin/false
+    restart: "no"
+    environment:
+      BACKREST_USER: postgres
+      BACKREST_UID: 109
+      BACKREST_GROUP: postgres
+      BACKREST_GID: 116
+    volumes:
+    - ./pgbackrest:/var/lib/pgbackrest
+    - ./etc:/etc/pgbackrest:ro
+    - /var/lib/postgresql/14/main:/var/lib/postgresql/14/main:ro
+    - /var/run/postgresql/.s.PGSQL.5432:/var/run/postgresql/.s.PGSQL.5432
