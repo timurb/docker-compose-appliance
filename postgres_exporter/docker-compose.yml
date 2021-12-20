@@ -1,0 +1,15 @@
+version: '3.6'
+
+services:
+  postgres-exporter:
+    image: quay.io/prometheuscommunity/postgres-exporter
+    restart: always
+    env_file:
+    - postgres_config  # https://github.com/prometheus-community/postgres_exporter#environment-variables
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
+
+networks:
+  default:
+    external: true
+    name: appliances
