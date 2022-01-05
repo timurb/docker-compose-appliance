@@ -1,0 +1,19 @@
+version: '3.6'
+
+services:
+  logstash:
+    image: erthad/logstash-gelf
+    user: "0:0"
+    volumes:
+      - ./pipeline:/usr/share/logstash/pipeline:ro
+      - ./data:/usr/share/logstash/data:rw
+      - /var/log:/var/log:ro
+    environment:
+      LS_JAVA_OPTS: "-Xmx512m -Xms512m"
+      XPACK_MONITORING_ENABLED: "false"
+    restart: always
+
+networks:
+  default:
+    external: true
+    name: appliances
